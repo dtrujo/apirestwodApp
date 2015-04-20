@@ -16,6 +16,53 @@ exports.findAllUsers = function(req, res){
 };
 
 /**
+ * GET - Return all exercies for specific user
+ */
+
+exports.findExercisesByUserId = function(req, res){
+     User.findById(req.params.id, function(err, user){
+          if(err) return res.send(500, err.message);
+
+          console.log('GET/Users/' + req.params.id + 'Exercises');
+          res.status(200).jsonp(user.exercises);
+     });
+};
+
+/**
+ * GET - Return a User with specified ID
+ */
+
+exports.findById = function(req, res) {
+     User.findById(req.params.id, function(err, user) {
+          if(err) return res.send(500, err.message);
+
+          console.log('GET /users/' + req.params.id);
+          res.status(200).jsonp(user);
+    });
+};
+
+/**
+ * PUT - Update user already exists
+ */
+
+ exports.updateUser = function(req, res) {
+     User.findById(req.params.id, function(err, user){
+          user.name     = req.body.name;
+          user.surName  = req.body.surName;
+          user.birthday = req.body.birthday;
+          user.userName = req.body.userName;
+          user.password = req.body.password;
+          user.weight   = req.body.weight;
+          user.hight    = req.body.hight;
+
+          user.save(function(err){
+               if(err) return res.send(500, err.message);
+               res.status(200).jsonp(user);
+          });
+     });
+ };
+
+/**
  * POST - Insert a new User in the DB
  */
 
@@ -31,7 +78,7 @@ exports.addUser = function(req,res){
           userName: req.body.userName,
           password: req.body.password,
           weight: req.body.weight,
-          hight: req.body.hight,
+          hight: req.body.hight
      });
 
      // read exercises array and create new exercise
@@ -55,5 +102,18 @@ exports.addUser = function(req,res){
      user.save(function(err,user){
           if(err)return res.send(500, err.message);
           res.status(200).jsonp(user);
+     });
+};
+
+/**
+ * DELETE - Delete specific user
+ */
+
+exports.deleteUser = function (req, res){
+     User.findById(req.params.id, function(err, user){
+          user.remove(function(err){
+               if (err) return res.send(500, err.message);
+               res.status(200);
+          })
      });
 };

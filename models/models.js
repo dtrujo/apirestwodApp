@@ -26,7 +26,6 @@ var exerciseModel = new Schema({
     weight: Number,
     hight: Number,
     exercises: [exerciseModel]
-    ///exercises: [{ type: Schema.ObjectId, ref: 'exercise' }]
 });
 
 
