@@ -106,6 +106,30 @@ exports.addUser = function(req,res){
 };
 
 /**
+ * POST - Insert exercise for specific user
+ */
+
+exports.addExercise = function (req, res){
+     User.findById(req.params.id, function(err, user){
+          
+          // create new exercise
+          var exercise = new Exercise({
+               name: req.body.name,
+               pr: req.body.pr
+          });
+
+          // add exercise into user
+          user.exercises.push(exercise);
+
+          // save user saving the new execersie
+          user.save(function(err, user){
+               if (err)return res.send(500, err.message);
+               res.status(200).jsonp(user);
+          });
+     });
+};
+
+/**
  * DELETE - Delete specific user
  */
 
@@ -114,6 +138,6 @@ exports.deleteUser = function (req, res){
           user.remove(function(err){
                if (err) return res.send(500, err.message);
                res.status(200);
-          })
+          });
      });
 };

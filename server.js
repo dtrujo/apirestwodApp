@@ -62,7 +62,8 @@ users.route('/users/:id')
     .delete(userCtrl.deleteUser);
 
 users.route('/users/:id/exercises')
-    .get(userCtrl.findExercisesByUserId);
+    .get(userCtrl.findExercisesByUserId)
+    .post(userCtrl.addExercise);
 
 app.use('/wodapp',users);
 
