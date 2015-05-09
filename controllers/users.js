@@ -42,6 +42,20 @@ exports.findById = function(req, res) {
 };
 
 /**
+ * GET - Find a specific exercise using ExerciseId and UserId
+ */
+
+ exports.findExerciseById = function(req, res) {
+     User.findById(req.params.idUser, function(err, user){
+          if (err) return res.send(500, err.message);
+
+          // send specific exercise
+          var exercise = user.exercises.id(req.params.idExercise);
+          res.status(200).json(exercise);
+     });
+ };
+
+/**
  * PUT - Update user already exists
  */
 
@@ -128,6 +142,24 @@ exports.addExercise = function (req, res){
           });
      });
 };
+
+/**
+ * DELETE - Delete specific Exercise
+ */
+
+ exports.deleteExercise = function (req, res){
+     User.findById(req.params.idUser, function(err, user){
+          if (err) return res.send(500, err.message);
+
+          // delete specific exercise
+          var exercise = user.exercises.id(req.params.idExercise).remove();
+          user.save(function (err) {
+               if (err) return handleError(err);
+               console.log('the sub-doc was removed');
+               res.status(200);
+          });
+     });
+ };
 
 /**
  * DELETE - Delete specific user
