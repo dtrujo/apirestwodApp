@@ -153,9 +153,12 @@ exports.addExercise = function (req, res){
 
           // delete specific exercise
           var exercise = user.exercises.id(req.params.idExercise).remove();
+
+          console.log(exercise);
+          
           user.save(function (err) {
                if (err) return handleError(err);
-               console.log('the sub-doc was removed');
+               console.log('Exercise ' + req.params.idExercise + 'has been removed');
                res.status(200);
           });
      });
