@@ -151,10 +151,23 @@ exports.addExercise = function (req, res){
      User.findById(req.params.idUser, function(err, user){
           if (err) return res.send(500, err.message);
 
+
+          user.update({ _id : req.params.idUser }, { $pull : { exercises :  { _id : this.db.objectId(req.params.idExercise) } } }, function (err,numAffected,raw) {
+                if(err)
+                {
+                    console.log(err);
+                    res.send(500, err.message);
+                }
+                else
+                {
+                    console.log(raw);
+                    res.status(200);
+                }
+            });
           // delete specific exercise
           //var exercise = user.exercises.id(req.params.idExercise).remove();
 
-          user.exercises.pull(req.params.idExercise);
+          //user.exercises.pull(req.params.idExercise);
           //console.log(exercise);
 
 
@@ -163,8 +176,8 @@ exports.addExercise = function (req, res){
             { $pull: { 'contact.phone': { number: '+1786543589455' } } }
           );*/
 
-          user.save();
-          res.status(200);
+          //user.save();
+          //res.status(200);
 
           /*user.save(function (err) {
                if (err) return handleError(err);
