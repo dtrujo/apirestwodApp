@@ -157,11 +157,20 @@ exports.addExercise = function (req, res){
           user.exercises.pull(req.params.idExercise);
           //console.log(exercise);
 
-          user.save(function (err) {
+
+          /*collection.update(
+            { _id: id },
+            { $pull: { 'contact.phone': { number: '+1786543589455' } } }
+          );*/
+
+          user.save();
+          res.status(200);
+
+          /*user.save(function (err) {
                if (err) return handleError(err);
                console.log('Exercise has been removed');
                res.status(200);
-          });
+          });*/
      });
  };
 
