@@ -152,13 +152,14 @@ exports.addExercise = function (req, res){
           if (err) return res.send(500, err.message);
 
           // delete specific exercise
-          var exercise = user.exercises.id(req.params.idExercise).remove();
+          //var exercise = user.exercises.id(req.params.idExercise).remove();
 
-          console.log(exercise);
-          
+          user.exercises.pull(req.params.idExercise);
+          //console.log(exercise);
+
           user.save(function (err) {
                if (err) return handleError(err);
-               console.log('Exercise ' + req.params.idExercise + 'has been removed');
+               console.log('Exercise has been removed');
                res.status(200);
           });
      });
