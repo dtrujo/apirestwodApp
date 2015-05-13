@@ -152,7 +152,7 @@ exports.addExercise = function (req, res){
           if (err) return res.send(500, err.message);
 
 
-          user.update({ _id : req.params.idUser }, { $pull : { exercises :  { _id : this.db.objectId(req.params.idExercise) } } }, function (err,numAffected,raw) {
+          user.update({ _id : req.params.idUser }, { $pull : { exercises :  { _id : req.params.idExercise }}}, function (err,numAffected,raw) {
                 if(err)
                 {
                     console.log(err);
