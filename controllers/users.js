@@ -148,43 +148,13 @@ exports.addExercise = function (req, res){
  */
 
  exports.deleteExercise = function (req, res){
-     User.findById(req.params.idUser, function(err, user){
-          if (err) return res.send(500, err.message);
-
-
-          var exercise = user.exercises.id(req.params.idExercise);
-          user.update({ user._id : req.params.idUser }, { $pull : { exercises : exercise }}, function (err,numAffected,raw) {
-                if(err)
-                {
-                    console.log(err);
-                    res.send(500, err.message);
-                }
-                else
-                {
-                    console.log(raw);
-                    res.status(200);
-                }
-            });
-          // delete specific exercise
-          //var exercise = user.exercises.id(req.params.idExercise).remove();
-
-          //user.exercises.pull(req.params.idExercise);
-          //console.log(exercise);
-
-
-          /*collection.update(
-            { _id: id },
-            { $pull: { 'contact.phone': { number: '+1786543589455' } } }
-          );*/
-
-          //user.save();
-          //res.status(200);
-
-          /*user.save(function (err) {
-               if (err) return handleError(err);
-               console.log('Exercise has been removed');
-               res.status(200);
-          });*/
+     User.findOneAndUpdate(
+          { _id: req.params.idUser }, 
+          { $pull: {exercises: { _id: req.params.idExercise }}},
+          function(err, exe) {
+               if (err) return res.send(500, err.message);
+               console.log('the element has been removed');
+               res.status(200).jsonp(exe);
      });
  };
 
