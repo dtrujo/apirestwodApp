@@ -156,7 +156,7 @@ exports.addExercise = function (req, res){
                console.log('the element has been removed');
 
                exe.exercises.id(req.params.idExercise).remove();
-               res.status(200).jsonp(exe.exercises);
+               res.status(200).jsonp(exe);
      });
  };
 
