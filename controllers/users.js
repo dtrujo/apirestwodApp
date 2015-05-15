@@ -153,9 +153,7 @@ exports.addExercise = function (req, res){
           { $pull: {exercises: { _id: req.params.idExercise }}},
           function(err, exe) {
                if (err) return res.send(500, err.message);
-               console.log('the element has been removed');
-
-               exe.exercises.id(req.params.idExercise).remove();
+               console.log('the exercise has been removed');
                res.status(200).jsonp(exe);
      });
  };
@@ -168,6 +166,7 @@ exports.deleteUser = function (req, res){
      User.findById(req.params.id, function(err, user){
           user.remove(function(err){
                if (err) return res.send(500, err.message);
+               console.log('the user has been removed');
                res.status(200);
           });
      });
