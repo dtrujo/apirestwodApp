@@ -148,13 +148,26 @@ exports.addExercise = function (req, res){
  */
 
  exports.deleteExercise = function (req, res){
-     User.findOneAndUpdate(
+     
+     /*User.findOneAndUpdate(
           { _id: req.params.idUser }, 
           { $pull: {exercises: { _id: req.params.idExercise }}},
           function(err, exe) {
                if (err) return res.send(500, err.message);
                console.log('the exercise has been removed');
                res.status(200).jsonp(exe);
+     });*/
+
+     User.findById(req.params.idUser, function(err, user){
+          
+          // remove exercise
+          user.exercises.id(req.params.idExercise).remove();
+
+          // save user saving without selected exercise
+          user.save(function(err, user){
+               if (err)return res.send(500, err.message);
+               res.status(200).jsonp(user);
+          });
      });
  };
 
