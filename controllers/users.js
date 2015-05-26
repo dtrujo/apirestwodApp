@@ -148,16 +148,6 @@ exports.addExercise = function (req, res){
  */
 
  exports.deleteExercise = function (req, res){
-     
-     /*User.findOneAndUpdate(
-          { _id: req.params.idUser }, 
-          { $pull: {exercises: { _id: req.params.idExercise }}},
-          function(err, exe) {
-               if (err) return res.send(500, err.message);
-               console.log('the exercise has been removed');
-               res.status(200).jsonp(exe);
-     });*/
-
      User.findById(req.params.idUser, function(err, user){
           
           // remove exercise
